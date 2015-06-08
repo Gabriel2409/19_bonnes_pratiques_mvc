@@ -796,7 +796,7 @@ class Form_File extends Form_Input {
 
 	public function get_cleaned_value($value) {
 
-		return isset($_FILES[$this->attrs['name']]) ? $_FILES[$this->attrs['name']]['tmp_name'] : null;
+		return isset($_FILES[$this->attrs['name']]) ? $_FILES[$this->attrs['name']] : null;
 	}
 
 	public function max_size($size) {

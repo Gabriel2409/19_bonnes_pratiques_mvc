@@ -23,8 +23,9 @@
 	else 
 	{ 
 		?>
-		<p>Bienvenue, <?php echo htmlspecialchars($_SESSION['pseudo']); ?>.</p>
+		
 		<ul>
+		
 			<li><a href="index.php?module=membres&amp;action=deconnexion">Déconnexion</a></li>
 		</ul>
 		<?php 

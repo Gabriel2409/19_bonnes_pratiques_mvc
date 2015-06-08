@@ -30,8 +30,6 @@ else
 	->label("Votre adresse email"); 
 
 	$form_inscription->add('File', 'avatar')
-	->filter_extensions('jpg', 'png', 'gif')
-	->max_size(MAX_SIZE_AVATAR) // en octet
 	->label("Votre avatar (facultatif)")
 	->Required(false);
 
@@ -68,7 +66,6 @@ else
 	// Tentative d'ajout du membre dans la base de donnees
 			list($nom_utilisateur, $mot_de_passe, $adresse_email, $avatar) =
 			$form_inscription->get_cleaned_data('nom_utilisateur', 'mdp', 'adresse_email', 'avatar');
-
 	// On veut utiliser le modele de l'inscription (~/modeles/inscription.php)
 			include CHEMIN_MODELE.'inscription.php';
 
@@ -98,23 +95,37 @@ else
 				mail($form_inscription->get_cleaned_data('adresse_email'), 'Inscription sur <monsite.com>', $message_mail, $headers_mail);
 
 		// Redimensionnement et sauvegarde de l'avatar (eventuel) dans le bon dossier
-				if (!empty($avatar)) 
+				if (!empty($avatar['tmp_name'])) 
 				{
+					$avatar_exension=strtolower(pathinfo($avatar['name'], PATHINFO_EXTENSION));
+					$extensions_autorisees=array('jpg','png','gif');
+					
+						if (!in_array($avatar_exension, $extensions_autorisees))
+					{
+							$erreurs_avatar='Mauvaise extension avatar'; // on n'affiche rien.
+					}
+					elseif ($avatar['size']>MAX_SIZE_AVATAR)
+					{
+							$erreurs_avatar='Taille avatar trop grande';
+					}
+					else
+					{
+						
 
-			// On souhaite utiliser la librairie Image
-					include CHEMIN_LIB.'image.php';
+						// On souhaite utiliser la librairie Image
+						include CHEMIN_LIB.'image.php';
+						// Redimensionnement et sauvegarde de l'avatar
+						$avatar = new Image($avatar['tmp_name']);
+						$avatar->resize_to(AVATAR_LARGEUR_MAXI, AVATAR_HAUTEUR_MAXI);
 
-			// Redimensionnement et sauvegarde de l'avatar
-					$avatar = new Image($avatar);
-					$avatar->resize_to(AVATAR_LARGEUR_MAXI, AVATAR_HAUTEUR_MAXI);
-					$avatar_filename = DOSSIER_AVATAR . $id_utilisateur .'.'.strtolower(pathinfo($avatar->get_filename(), PATHINFO_EXTENSION));
-					$avatar->save_as($avatar_filename);
+						$avatar_filename = DOSSIER_AVATAR . $id_utilisateur . '.' . $avatar_exension;
+						$avatar->save_as($avatar_filename);
 
 
-			// Mise à jour de l'avatar dans la table
-			// maj_avatar_membre() est défini dans ~/modeles/membres.php
-					maj_avatar_membre($id_utilisateur , $avatar_filename);
-
+						// Mise à jour de l'avatar dans la table
+						// maj_avatar_membre() est défini dans ~/modeles/membres.php
+						maj_avatar_membre($id_utilisateur , $avatar_filename);
+					}
 				} //endif (!empty($avatar)) 
 
 		// Affichage de la confirmation de l'inscription
