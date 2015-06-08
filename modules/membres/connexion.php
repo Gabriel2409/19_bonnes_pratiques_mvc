@@ -55,8 +55,8 @@ else
 			$infos_utilisateur = lire_infos_utilisateur($id_utilisateur);
 			
 			// On enregistre les informations dans la session
-			$_SESSION['id']     = $id_utilisateur;
-			$_SESSION['pseudo'] = $nom_utilisateur;
+			$_SESSION['id']     = $infos_utilisateur['id'];
+			$_SESSION['pseudo'] = $infos_utilisateur['nom_utilisateur'];
 			$_SESSION['avatar'] = $infos_utilisateur['avatar'];
 			$_SESSION['email']  = $infos_utilisateur['adresse_email'];
 			

@@ -12,6 +12,7 @@ else
 {
 
 	
+	
 	// lire_infos_utilisateur() est défini dans ~/modules/membres.php
 	$infos_utilisateur = lire_infos_utilisateur($_GET['id']);
 
@@ -22,7 +23,7 @@ else
 	{
 			$nom_utilisateur=$infos_utilisateur['nom_utilisateur'];
 			$adresse_email=$infos_utilisateur['adresse_email'];
-			$avatar=$infos_utilisateur['avatar'];
+			$avatar= ($infos_utilisateur['avatar']) ? $infos_utilisateur['avatar'] : DOSSIER_AVATAR . 'default_avatar.gif';
 			$date_inscription=$infos_utilisateur['date_inscription'];
 
 		include CHEMIN_VUE.'profil_infos_utilisateur.php';
