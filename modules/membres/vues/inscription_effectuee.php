@@ -1,5 +1,4 @@
-<h2>Inscription confirmée</h2>
+<h2>Confirmation de connexion</h2>
 
-<p>L'inscription s'est déroulée avec succès !</p>
-
-<p>Vous allez bientôt recevoir un mail vous permettant d'activer votre compte afin de pouvoir vous connecter.</p>
+<p>Bienvenue, <?php echo $_SESSION['pseudo']; ?>.<br />
+Vous êtes maintenant connecté !</p>
