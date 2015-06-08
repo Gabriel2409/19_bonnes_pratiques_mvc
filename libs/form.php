@@ -1061,7 +1061,6 @@ class Form_Checkbox extends Form_Input {
 		if (parent::is_valid($value)) {
 
 			if ($this->required && !empty($this->value) && $value != $this->value) {
-
 				$this->_error('incorrect_value');
 				return false;
 			}
@@ -1087,8 +1086,8 @@ class Form_Checkbox extends Form_Input {
 		if (!empty($errors)) { $errors = "\n".$errors; }
 
 		$value = (!empty($this->value)) ? ' value="'.htmlspecialchars($this->value).'"' : '';
-		$checked = ($this->value == $this->form->get_bounded_data($this->attrs['name'])) ? ' checked="checked"' : '';
-
+		//$checked = ($this->value == $this->form->get_bounded_data($this->attrs['name'])) ? ' checked="checked"' : '';
+		$checked = '';
 		$field = '<input'.$id.$this->attrs.$value.$checked.' />';
 		return $tab.sprintf("%1\$s%2\$s%3\$s", $field, $label, $errors);
 	}

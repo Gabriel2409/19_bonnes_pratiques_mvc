@@ -35,8 +35,10 @@ define('CHEMIN_VUE',    'modules/'.$module.'/vues/');
 define('CHEMIN_FONCTION_CONTROLLER',    'modules/'.$module.'/fonctions/');
 define('CHEMIN_MODELE', 'modeles/');
 define('CHEMIN_LIB',    'libs/');
-
+define('CHEMIN_VUE_GLOBALE', 'vues_globales/');
 // Configurations relatives à l'avatar
+
 define('AVATAR_LARGEUR_MAXI', 100);
 define('AVATAR_HAUTEUR_MAXI', 100);
+define('MAX_SIZE_AVATAR', 50000);
 define('DOSSIER_AVATAR', 'images/avatars/');
